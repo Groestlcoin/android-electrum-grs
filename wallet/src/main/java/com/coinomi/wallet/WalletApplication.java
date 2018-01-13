@@ -15,6 +15,7 @@ import android.preference.PreferenceManager;
 import android.support.multidex.MultiDexApplication;
 import android.widget.Toast;
 
+import com.coinomi.core.coins.CoinID;
 import com.coinomi.core.coins.CoinType;
 import com.coinomi.core.exchange.shapeshift.ShapeShift;
 import com.coinomi.core.util.HardwareSoftwareCompliance;
@@ -33,7 +34,7 @@ import org.acra.annotation.ReportsCrashes;
 import org.acra.sender.HttpSender;
 import org.bitcoinj.core.Address;
 import org.bitcoinj.crypto.MnemonicCode;
-import org.bitcoinj.store.UnreadableWalletException;
+import org.bitcoinj.wallet.UnreadableWalletException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -82,6 +83,8 @@ public class WalletApplication extends MultiDexApplication /*Application*/ {
     @Override
     public void onCreate() {
 //        ACRA.init(this);
+
+        org.bitcoinj.core.Context.getOrCreate(CoinID.GROESTLCOIN_MAIN.getCoinType());
 
         config = new Configuration(PreferenceManager.getDefaultSharedPreferences(this));
 

@@ -22,7 +22,8 @@ import java.util.Set;
  * @author John L. Jegutanis
  */
 public enum CoinID {
-    GROESTLCOIN_MAIN(GroestlCoinMain.get())
+    GROESTLCOIN_MAIN(GroestlCoinMain.get()),
+    GROESTLCOIN_TEST(GroestlcoinTest.get())
     ;
 
     private static List<CoinType> types;
@@ -31,7 +32,7 @@ public enum CoinID {
     private static HashMap<String, ArrayList<CoinType>> uriLookup = new HashMap<>();
 
     static {
-        Set<NetworkParameters> bitcoinjNetworks = Networks.get();
+        Set<? extends NetworkParameters> bitcoinjNetworks = Networks.get();
         for (NetworkParameters network : bitcoinjNetworks) {
             Networks.unregister(network);
         }

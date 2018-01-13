@@ -184,10 +184,10 @@
     <!-- About Activity -->
     <string name="title_activity_about">About Groestlcoin Electrum GRS</string>
     <string name="app_name_long">Groestlcoin Electrum GRS for Android</string>
-    <string name="about_licence">An open source project\nhttps://github.com/HashEngineering/coinomi-android\nSource code licensed under GNU General Public License 3</string>
+    <string name="about_licence">An open source project\nhttps://github.com/Groestlcoin/android-electrum-grs\nSource code licensed under GNU General Public License 3</string>
     <string name="about_credits_nubits"></string>
-    <string name="about_credits_bitcoinj">Uses GroestlcoinJ library\nhttps://github.com/HashEngineering/groestlcoinj/ a fork of bitcoinj</string>
-    <string name="about_credits_electrum">Uses Electrum-GRS server software\nhttps://github.com/GroestlCoin/electrum-grs-server</string>
+    <string name="about_credits_bitcoinj">Uses GroestlcoinJ library\nhttps://github.com/Groestlcoin/groestlcoinj/ a fork of bitcoinj</string>
+    <string name="about_credits_electrum">Uses Electrum-GRS server software\nhttps://github.com/Groestlcoin/electrumx-grs</string>
     <string name="about_credits_schildbach">Influenced by Coinomi\nhttps://github.com/coinomi/coinomi-android/</string>
 
     <string name="about_credits_translations">Translations provided by:</string>
@@ -196,7 +196,7 @@
     <string name="about_credits_crypto_icons"></string>
     <string name="about_credits_font_icons">Font-icons by Daniel Bruce\nhttp://www.entypo.com</string>
     <string name="about_credits_exchange_rates">Exchange rates provided by\nhttp://www.cryptocoincharts.info/\nhttps://bitcoinaverage.com/</string>
-    <string name="about_coinomi_copyright" translatable="false">Groestlcoin 2015-2016</string>
+    <string name="about_coinomi_copyright" translatable="false">Groestlcoin 2015-2018</string>
     <!-- Add Coins -->
     <string name="title_activity_add_coins">Add coins</string>
     <string name="password_add_coin">You are about to create a %1$s account in your wallet.</string>

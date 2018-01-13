@@ -24,10 +24,10 @@ import android.text.SpannableString;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
 
-import com.coinomi.core.util.MonetaryFormat;
 import com.coinomi.wallet.Constants;
 
 import org.bitcoinj.core.Monetary;
+import org.bitcoinj.utils.MonetaryFormat;
 
 import java.util.regex.Matcher;
 

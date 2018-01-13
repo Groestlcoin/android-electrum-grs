@@ -2,7 +2,7 @@ package com.coinomi.core.wallet;
 
 import javax.annotation.Nullable;
 
-import static com.coinomi.core.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * @author John L. Jegutanis

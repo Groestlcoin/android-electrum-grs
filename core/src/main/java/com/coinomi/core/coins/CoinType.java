@@ -2,15 +2,18 @@ package com.coinomi.core.coins;
 
 
 import com.coinomi.core.messages.MessageFactory;
-import com.coinomi.core.util.MonetaryFormat;
+//import com.coinomi.core.util.MonetaryFormat;
 import com.google.common.base.Charsets;
 
 import org.bitcoinj.core.Address;
 import org.bitcoinj.core.AddressFormatException;
+import org.bitcoinj.core.BitcoinSerializer;
 import org.bitcoinj.core.Coin;
 import org.bitcoinj.core.NetworkParameters;
 import org.bitcoinj.crypto.ChildNumber;
 import org.bitcoinj.crypto.HDUtils;
+import org.bitcoinj.params.AbstractBitcoinNetParams;
+import org.bitcoinj.utils.MonetaryFormat;
 
 import java.io.Serializable;
 import java.math.BigInteger;
@@ -24,7 +27,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * @author John L. Jegutanis
  */
-abstract public class CoinType extends NetworkParameters implements ValueType, Serializable {
+abstract public class CoinType extends AbstractBitcoinNetParams implements ValueType, Serializable {
     private static final long serialVersionUID = 1L;
 
     private static final String BIP_44_KEY_PATH = "44H/%dH/%dH";
@@ -174,9 +177,8 @@ abstract public class CoinType extends NetworkParameters implements ValueType, S
 
     @Override
     public String getPaymentProtocolId() {
-        throw new RuntimeException("Method not implemented");
+        return PAYMENT_PROTOCOL_ID_MAINNET;
     }
-
     @Override
     public String toString() {
         return "Coin{" +
@@ -220,5 +222,16 @@ abstract public class CoinType extends NetworkParameters implements ValueType, S
     @Override
     public boolean equals(ValueType obj) {
         return super.equals(obj);
+    }
+
+
+    @Override
+    public BitcoinSerializer getSerializer(boolean parseRetain) {
+        return new BitcoinSerializer(this, parseRetain);
+    }
+
+    @Override
+    public boolean hasMaxMoney() {
+        return true;
     }
 }

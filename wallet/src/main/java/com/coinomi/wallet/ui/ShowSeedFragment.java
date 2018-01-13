@@ -31,7 +31,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.spongycastle.crypto.params.KeyParameter;
 
-import static com.coinomi.core.Preconditions.checkState;
+import static com.google.common.base.Preconditions.checkState;
 
 /**
  * @author John L. Jegutanis

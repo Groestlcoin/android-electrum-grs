@@ -13,11 +13,13 @@ import android.widget.TextView;
 
 import com.coinomi.core.coins.Value;
 import com.coinomi.core.coins.ValueType;
-import com.coinomi.core.util.MonetaryFormat;
+//import com.coinomi.core.util.MonetaryFormat;
+import com.coinomi.core.util.CoreMonetaryFormat;
 import com.coinomi.wallet.R;
 import com.coinomi.wallet.util.MonetarySpannable;
 
 import org.bitcoinj.core.Coin;
+import org.bitcoinj.utils.MonetaryFormat;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
@@ -98,13 +100,13 @@ public class AmountEditView extends RelativeLayout {
 
     @CheckForNull
     public Value getAmount() {
-        final String str = textView.getText().toString().trim();
+        String str = textView.getText().toString().trim();
         Value amount = null;
 
         try {
             if (!str.isEmpty()) {
                 if (type != null) {
-                    amount = inputFormat.parse(type, str);
+                    amount = CoreMonetaryFormat.fromBitcoinMonetaryFormat(inputFormat).parse(type, str);
                 }
             }
         } catch (final Exception x) { /* ignored */ }

@@ -10,7 +10,8 @@ import org.bitcoinj.core.Coin;
 import org.bitcoinj.core.ECKey;
 import org.bitcoinj.core.InsufficientMoneyException;
 import org.bitcoinj.core.NetworkParameters;
-import org.bitcoinj.core.ScriptException;
+import org.bitcoinj.script.ScriptError;
+import org.bitcoinj.script.ScriptException;
 import org.bitcoinj.core.Transaction;
 import org.bitcoinj.core.TransactionConfidence;
 import org.bitcoinj.core.TransactionInput;
@@ -33,9 +34,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.locks.ReentrantLock;
 
-import static com.coinomi.core.Preconditions.checkArgument;
-import static com.coinomi.core.Preconditions.checkNotNull;
-import static com.coinomi.core.Preconditions.checkState;
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkState;
 
 /**
  * @author John L. Jegutanis
@@ -103,7 +104,7 @@ public class TransactionCreator {
                 for (TransactionOutput output : req.tx.getOutputs())
                     if (output.getValue().compareTo(coinType.getSoftDustLimit()) < 0) {
                         if (output.getValue().compareTo(coinType.getMinNonDust()) < 0)
-                            throw new org.bitcoinj.core.Wallet.DustySendRequested();
+                            throw new org.bitcoinj.wallet.Wallet.DustySendRequested();
                         numberOfSoftDustOutputs++;
                     }
             }
@@ -142,7 +143,7 @@ public class TransactionCreator {
                 final Coin feePerKb = req.feePerKb == null ? Coin.ZERO : req.feePerKb;
                 Transaction tx = req.tx;
                 if (!adjustOutputDownwardsForFee(tx, bestCoinSelection, baseFee, feePerKb))
-                    throw new org.bitcoinj.core.Wallet.CouldNotAdjustDownwards();
+                    throw new org.bitcoinj.wallet.Wallet.CouldNotAdjustDownwards();
             }
 
             if (bestChangeOutput != null) {
@@ -162,7 +163,7 @@ public class TransactionCreator {
             // Check size.
             int size = req.tx.bitcoinSerialize().length;
             if (size > Transaction.MAX_STANDARD_TX_SIZE)
-                throw new org.bitcoinj.core.Wallet.ExceededMaxTransactionSize();
+                throw new org.bitcoinj.wallet.Wallet.ExceededMaxTransactionSize();
 
             final Coin calculatedFee = req.tx.getFee();
             if (calculatedFee != null) {
@@ -551,7 +552,7 @@ public class TransactionCreator {
                     }
                     checkNotNull(key, "Coin selection includes unspendable outputs");
                 } else if (script.isPayToScriptHash()) {
-                    throw new ScriptException("Wallet does not currently support PayToScriptHash");
+                    throw new ScriptException(ScriptError.SCRIPT_ERR_BAD_OPCODE, "Wallet does not currently support PayToScriptHash");
 //                    redeemScript = keychain.findRedeemScriptFromPubHash(script.getPubKeyHash());
 //                    checkNotNull(redeemScript, "Coin selection includes unspendable outputs");
                 }

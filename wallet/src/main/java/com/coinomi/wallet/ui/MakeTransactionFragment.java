@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.coinomi.core.coins.CoinType;
+import com.coinomi.core.coins.GroestlCoinMain;
 import com.coinomi.core.coins.Value;
 import com.coinomi.core.exchange.shapeshift.ShapeShift;
 import com.coinomi.core.exchange.shapeshift.data.ShapeShiftAmountTx;
@@ -58,7 +59,7 @@ import java.util.HashMap;
 
 import javax.annotation.Nullable;
 
-import static com.coinomi.core.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkNotNull;
 import static com.coinomi.wallet.Constants.ARG_ACCOUNT_ID;
 import static com.coinomi.wallet.Constants.ARG_EMPTY_WALLET;
 import static com.coinomi.wallet.Constants.ARG_SEND_TO_ACCOUNT_ID;
@@ -158,7 +159,10 @@ public class MakeTransactionFragment extends Fragment {
                 sendToAddress = toAccount.getReceiveAddress(config.isManualAddressManagement());
                 sendingToAccount = true;
             } else {
-                sendToAddress = (Address) checkNotNull(args.getSerializable(ARG_SEND_TO_ADDRESS));
+                //sendToAddress = (Address) checkNotNull(args.getSerializable(ARG_SEND_TO_ADDRESS));
+                //sendToAddress = new Address(GroestlCoinMain.get(), sendToAddress.getHash160());                sendToAddress = Address.fromBase58(Address.getParametersFromAddress(), args.getString(ARG_SEND_TO_ADDRESS));
+                sendToAddress = Address.fromBase58(Address.getParametersFromAddress(args.getString(ARG_SEND_TO_ADDRESS)), args.getString(ARG_SEND_TO_ADDRESS));
+
                 sendingToAccount = false;
             }
 

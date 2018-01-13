@@ -38,11 +38,9 @@ import android.widget.TextView;
 
 import com.coinomi.core.coins.CoinType;
 import com.coinomi.core.coins.Value;
-import com.coinomi.core.coins.VpncoinMain;
 import com.coinomi.core.messages.MessageFactory;
 import com.coinomi.core.util.GenericUtils;
 import com.coinomi.core.wallet.AbstractWallet;
-import com.coinomi.core.wallet.families.vpncoin.VpncoinTxMessage;
 import com.coinomi.wallet.AddressBookProvider;
 import com.coinomi.wallet.R;
 import com.coinomi.wallet.ui.widget.CurrencyTextView;

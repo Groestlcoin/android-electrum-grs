@@ -53,7 +53,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static com.coinomi.core.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkNotNull;
 import static com.coinomi.wallet.util.UiUtils.setGone;
 import static com.coinomi.wallet.util.UiUtils.setInvisible;
 import static com.coinomi.wallet.util.UiUtils.setVisible;

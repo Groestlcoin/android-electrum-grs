@@ -18,7 +18,7 @@ import java.util.zip.Inflater;
 
 import javax.annotation.Nullable;
 
-import static com.coinomi.core.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkArgument;
 
 /**
  * @author John L. Jegutanis

@@ -161,8 +161,8 @@ final public class WalletActivity extends BaseWalletActivity implements
             openPocket(lastAccount, false);
         }
         //remove the ability to get the Navigation Drawer from the Action Bar and by swiping
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        ((DrawerLayout) findViewById(R.id.drawer_layout)).setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        //((DrawerLayout) findViewById(R.id.drawer_layout)).setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
     }
 
     private void navDrawerSelectAccount(@Nullable WalletAccount account, boolean closeDrawer) {
@@ -179,8 +179,8 @@ final public class WalletActivity extends BaseWalletActivity implements
 
     private void createNavDrawerItems() {
         navDrawerItems.clear();
-        NavDrawerItem.addItem(navDrawerItems, ITEM_SECTION_TITLE, getString(R.string.navigation_drawer_services));
-        NavDrawerItem.addItem(navDrawerItems, ITEM_TRADE, getString(R.string.title_activity_trade), R.drawable.trade, null);
+        //NavDrawerItem.addItem(navDrawerItems, ITEM_SECTION_TITLE, getString(R.string.navigation_drawer_services));
+        //NavDrawerItem.addItem(navDrawerItems, ITEM_TRADE, getString(R.string.title_activity_trade), R.drawable.trade, null);
         NavDrawerItem.addItem(navDrawerItems, ITEM_SECTION_TITLE, getString(R.string.navigation_drawer_wallet));
         for (WalletAccount account : getAllAccounts()) {
             CoinType type = account.getCoinType();

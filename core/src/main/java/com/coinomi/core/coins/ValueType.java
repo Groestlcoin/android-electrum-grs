@@ -1,8 +1,9 @@
 package com.coinomi.core.coins;
 
-import com.coinomi.core.util.MonetaryFormat;
+//import com.coinomi.core.util.MonetaryFormat;
 
 import org.bitcoinj.core.Coin;
+import org.bitcoinj.utils.MonetaryFormat;
 
 import java.io.Serializable;
 

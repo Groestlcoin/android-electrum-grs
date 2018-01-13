@@ -1,9 +1,9 @@
 package com.coinomi.core.coins;
 
 import com.coinomi.core.util.Currencies;
-import com.coinomi.core.util.MonetaryFormat;
 
 import org.bitcoinj.core.Coin;
+import org.bitcoinj.utils.MonetaryFormat;
 
 import java.math.BigInteger;
 import java.util.HashMap;

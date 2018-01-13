@@ -18,7 +18,7 @@ import com.coinomi.wallet.util.LayoutUtils;
 import com.coinomi.wallet.util.Qr;
 import com.coinomi.wallet.util.UiUtils;
 
-import static com.coinomi.core.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * @author John L. Jegutanis

@@ -50,9 +50,9 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
-import static com.coinomi.core.Preconditions.checkArgument;
-import static com.coinomi.core.Preconditions.checkNotNull;
-import static com.coinomi.core.Preconditions.checkState;
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkState;
 import static org.bitcoinj.wallet.KeyChain.KeyPurpose.CHANGE;
 import static org.bitcoinj.wallet.KeyChain.KeyPurpose.RECEIVE_FUNDS;
 import static org.bitcoinj.wallet.KeyChain.KeyPurpose.REFUND;
@@ -69,19 +69,24 @@ public class WalletPocketHD extends AbstractWallet {
 
     @VisibleForTesting SimpleHDKeyChain keys;
 
+    CoinType coinType;
+
     public WalletPocketHD(DeterministicKey rootKey, CoinType coinType,
                           @Nullable KeyCrypter keyCrypter, @Nullable KeyParameter key) {
         this(new SimpleHDKeyChain(rootKey, keyCrypter, key), coinType);
+        this.coinType = coinType;
     }
 
     WalletPocketHD(SimpleHDKeyChain keys, CoinType coinType) {
         this(keys.getId(coinType.getId()), keys, coinType);
+        this.coinType = coinType;
     }
 
     WalletPocketHD(String id, SimpleHDKeyChain keys, CoinType coinType) {
         super(checkNotNull(coinType), id);
         this.keys = checkNotNull(keys);
         transactionCreator = new TransactionCreator(this);
+        this.coinType = coinType;
     }
 
     /******************************************************************************************************************/
@@ -309,7 +314,7 @@ public class WalletPocketHD extends AbstractWallet {
         DeterministicKey key = keys.getWatchingKey();
         ImmutableList<ChildNumber> path = ImmutableList.of(key.getChildNumber());
         key = new DeterministicKey(path, key.getChainCode(), key.getPubKeyPoint(), null, null);
-        return key.serializePubB58();
+        return key.serializePubB58(coinType);
     }
 
     @Override

@@ -16,11 +16,11 @@ import org.bitcoinj.crypto.KeyCrypter;
 import org.bitcoinj.crypto.KeyCrypterException;
 import org.bitcoinj.crypto.KeyCrypterScrypt;
 import org.bitcoinj.crypto.LazyECPoint;
-import org.bitcoinj.store.UnreadableWalletException;
+import org.bitcoinj.wallet.UnreadableWalletException;
 import org.bitcoinj.utils.Threading;
 import org.bitcoinj.wallet.EncryptableKeyChain;
 import org.bitcoinj.wallet.KeyBag;
-import org.bitcoinj.wallet.KeyChainEventListener;
+import org.bitcoinj.wallet.listeners.KeyChainEventListener;
 import org.bitcoinj.wallet.RedeemData;
 import com.google.common.collect.ImmutableList;
 import com.google.protobuf.ByteString;
@@ -157,7 +157,7 @@ public class SimpleHDKeyChain implements EncryptableKeyChain, KeyBag {
             if (!isLeaf(key)) continue; // Not a leaf key.
             DeterministicKey parent = hierarchy.get(checkNotNull(key.getParent(), "Key has no parent").getPath(), false, false);
             // Clone the key to the new encrypted hierarchy.
-            key = new DeterministicKey(key.getPubOnly(), parent);
+            key = new DeterministicKey(key, parent);
             hierarchy.putKey(key);
             simpleKeyChain.importKey(key);
         }
@@ -427,7 +427,7 @@ public class SimpleHDKeyChain implements EncryptableKeyChain, KeyBag {
      * but can't spend money from it.</p>
      */
     public DeterministicKey getWatchingKey() {
-        return rootKey.getPubOnly();
+        return rootKey;
     }
 
     @Override
@@ -696,7 +696,7 @@ public class SimpleHDKeyChain implements EncryptableKeyChain, KeyBag {
             checkState(key.isEncrypted(), "Key is not encrypted");
             DeterministicKey parent = chain.hierarchy.get(checkNotNull(key.getParent(), "Key has null parent").getPath(), false, false);
             // Clone the key to the new decrypted hierarchy.
-            key = new DeterministicKey(key.getPubOnly(), parent);
+            key = new DeterministicKey(key, parent);
             chain.hierarchy.putKey(key);
             chain.simpleKeyChain.importKeys(key);
         }
@@ -870,7 +870,7 @@ public class SimpleHDKeyChain implements EncryptableKeyChain, KeyBag {
         int nextChild = numChildren;
         for (int i = 0; i < needed; i++) {
             DeterministicKey key = HDKeyDerivation.deriveThisOrNextChildKey(parent, nextChild);
-            key = key.getPubOnly();
+            //key = key.getPubOnly();
             hierarchy.putKey(key);
             result.add(key);
             nextChild = key.getChildNumber().num() + 1;

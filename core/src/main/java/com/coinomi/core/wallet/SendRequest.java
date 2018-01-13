@@ -21,7 +21,7 @@ import com.coinomi.core.coins.CoinType;
 import org.bitcoinj.core.Address;
 import org.bitcoinj.core.Coin;
 import org.bitcoinj.core.Transaction;
-import org.bitcoinj.core.Wallet.MissingSigsMode;
+import org.bitcoinj.wallet.Wallet.MissingSigsMode;
 import org.bitcoinj.wallet.CoinSelector;
 
 import com.coinomi.core.messages.TxMessage;

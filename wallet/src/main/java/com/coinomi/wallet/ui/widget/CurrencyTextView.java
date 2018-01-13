@@ -28,12 +28,13 @@ import android.widget.TextView;
 import com.coinomi.core.coins.CoinType;
 import com.coinomi.core.coins.Value;
 import com.coinomi.core.coins.ValueType;
-import com.coinomi.core.util.MonetaryFormat;
+//import com.coinomi.core.util.MonetaryFormat;
 import com.coinomi.wallet.Constants;
 import com.coinomi.wallet.R;
 import com.coinomi.wallet.util.MonetarySpannable;
 
 import org.bitcoinj.core.Monetary;
+import org.bitcoinj.utils.MonetaryFormat;
 
 import javax.annotation.Nonnull;
 

@@ -7,7 +7,7 @@ import com.coinomi.core.util.ExchangeRateBase;
 
 import org.json.JSONObject;
 
-import static com.coinomi.core.Preconditions.checkState;
+import static com.google.common.base.Preconditions.checkState;
 
 /**
  * @author John L. Jegutanis

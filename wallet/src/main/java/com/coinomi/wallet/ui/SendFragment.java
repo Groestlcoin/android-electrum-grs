@@ -66,7 +66,7 @@ import org.bitcoinj.core.Address;
 import org.bitcoinj.core.AddressFormatException;
 import org.bitcoinj.core.InsufficientMoneyException;
 import org.bitcoinj.core.Transaction;
-import org.bitcoinj.core.Wallet;
+import org.bitcoinj.wallet.Wallet;
 import org.bitcoinj.crypto.KeyCrypterException;
 import org.bitcoinj.utils.Threading;
 import org.slf4j.Logger;
@@ -83,7 +83,7 @@ import javax.annotation.Nullable;
 import static android.view.View.GONE;
 import static android.view.View.OnClickListener;
 import static android.view.View.VISIBLE;
-import static com.coinomi.core.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkNotNull;
 import static com.coinomi.core.coins.Value.canCompare;
 import static com.coinomi.wallet.ExchangeRatesProvider.getRates;
 import static com.coinomi.wallet.util.UiUtils.setGone;
@@ -598,7 +598,7 @@ public class SendFragment extends Fragment {
             intent.putExtra(Constants.ARG_SEND_VALUE, amount);
         }
         intent.putExtra(Constants.ARG_ACCOUNT_ID, pocket.getId());
-        intent.putExtra(Constants.ARG_SEND_TO_ADDRESS, toAddress);
+        intent.putExtra(Constants.ARG_SEND_TO_ADDRESS, toAddress.toString());
         if (txMessage != null) intent.putExtra(Constants.ARG_TX_MESSAGE, txMessage);
 
         startActivityForResult(intent, SIGN_TRANSACTION);

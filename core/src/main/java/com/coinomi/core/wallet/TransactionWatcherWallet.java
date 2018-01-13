@@ -14,7 +14,7 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
 import org.bitcoinj.core.Address;
-import org.bitcoinj.core.ScriptException;
+import org.bitcoinj.script.ScriptException;
 import org.bitcoinj.core.Sha256Hash;
 import org.bitcoinj.core.Transaction;
 import org.bitcoinj.core.TransactionConfidence;
@@ -44,8 +44,8 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import javax.annotation.Nullable;
 
-import static com.coinomi.core.Preconditions.checkNotNull;
-import static com.coinomi.core.Preconditions.checkState;
+import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkState;
 
 /**
  * @author John L. Jegutanis
@@ -482,7 +482,7 @@ abstract public class TransactionWatcherWallet implements WalletAccount {
             Value value = coinType.value(0);
             for (Transaction tx : txs) {
                 if (toMe) {
-                    value = value.add(tx.getValueSentToMe(this, false));
+                    value = value.add(tx.getValueSentToMe(this));
                 } else {
                     value = value.add(tx.getValue(this));
                 }

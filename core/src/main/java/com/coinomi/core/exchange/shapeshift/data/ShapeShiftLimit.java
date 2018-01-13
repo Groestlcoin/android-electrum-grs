@@ -9,7 +9,7 @@ import org.json.JSONObject;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-import static com.coinomi.core.Preconditions.checkState;
+import static com.google.common.base.Preconditions.checkState;
 
 /**
  * @author John L. Jegutanis

@@ -37,7 +37,7 @@ public class WelcomeFragment extends Fragment {
 
         view.findViewById(R.id.create_wallet).setOnClickListener(getOnCreateListener());
         view.findViewById(R.id.restore_wallet).setOnClickListener(getOnRestoreListener());
-        //view.findViewById(R.id.test_wallet).setOnClickListener(getOnTestListener());
+        view.findViewById(R.id.test_wallet).setOnClickListener(getOnTestListener());
 
         return view;
     }
