@@ -16,8 +16,8 @@ android {
         minSdkVersion 10
         targetSdkVersion 21
         multiDexEnabled true
-        versionCode 59
-        versionName "v1.5.28"
+        versionCode 60
+        versionName "v1.5.29"
     }
     dexOptions {
         preDexLibraries = false
