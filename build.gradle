@@ -3,9 +3,14 @@
 buildscript {
     repositories {
         mavenCentral()
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+        }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.3'
+        classpath 'com.android.tools.build:gradle:3.2.1'
+
 //        classpath 'org.robolectric:robolectric-gradle-plugin:0.11.+'
 
         // NOTE: Do not place your application dependencies here; they belong
@@ -17,5 +22,13 @@ allprojects {
     repositories {
         mavenCentral()
         jcenter()
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+        }
+    }
+
+    tasks.withType(JavaCompile) {
+        options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
     }
 }
