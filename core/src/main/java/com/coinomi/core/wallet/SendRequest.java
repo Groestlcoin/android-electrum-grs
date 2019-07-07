@@ -25,8 +25,7 @@ import org.bitcoinj.wallet.Wallet.MissingSigsMode;
 import org.bitcoinj.wallet.CoinSelector;
 
 import com.coinomi.core.messages.TxMessage;
-import com.google.common.base.Objects;
-import com.google.common.base.Objects.ToStringHelper;
+import com.google.common.base.MoreObjects;
 
 import org.spongycastle.crypto.params.KeyParameter;
 
@@ -195,7 +194,7 @@ public class SendRequest implements Serializable{
     @Override
     public String toString() {
         // print only the user-settable fields
-        ToStringHelper helper = Objects.toStringHelper(this).omitNullValues();
+        MoreObjects.ToStringHelper helper = MoreObjects.toStringHelper(this).omitNullValues();
         helper.add("emptyWallet", emptyWallet);
         helper.add("changeAddress", changeAddress);
         helper.add("fee", fee);

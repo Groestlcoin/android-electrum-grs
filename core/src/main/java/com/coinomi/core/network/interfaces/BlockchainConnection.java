@@ -14,7 +14,7 @@ import java.util.List;
 public interface BlockchainConnection {
     void subscribeToBlockchain(final TransactionEventListener listener);
 
-    void subscribeToAddresses(List<Address> addresses,
+    void subscribeToAddresses(List<Address> scripts,
                               TransactionEventListener listener);
 
 //    void getUnspentTx(AddressStatus status, TransactionEventListener listener);

@@ -16,10 +16,12 @@ import com.google.common.util.concurrent.Service;
 
 import org.bitcoinj.core.Address;
 import org.bitcoinj.core.AddressFormatException;
+import org.bitcoinj.core.Block;
 import org.bitcoinj.core.Sha256Hash;
 import org.bitcoinj.core.Transaction;
 import org.bitcoinj.core.TransactionOutPoint;
 import org.bitcoinj.core.Utils;
+import org.bitcoinj.script.ScriptBuilder;
 import org.bitcoinj.utils.ListenerRegistration;
 import org.bitcoinj.utils.Threading;
 import org.json.JSONArray;
@@ -279,7 +281,8 @@ public class ServerClient implements BlockchainConnection {
     }
 
     private BlockHeader parseBlockHeader(CoinType type, JSONObject json) throws JSONException {
-        return new BlockHeader(type, json.getLong("timestamp"), json.getInt("block_height"));
+        Block block = new Block(type, Utils.HEX.decode(json.getString("hex")));
+        return new BlockHeader(type, block.getTimeSeconds(), json.getInt("height"));
     }
 
     @Override
@@ -328,17 +331,26 @@ public class ServerClient implements BlockchainConnection {
     }
 
     @Override
-    public void subscribeToAddresses(List<Address> addresses, final TransactionEventListener listener) {
+    public void subscribeToAddresses(final List<Address> addresses, final TransactionEventListener listener) {
         checkNotNull(stratumClient);
 
-        final CallMessage callMessage = new CallMessage("blockchain.address.subscribe", (List)null);
+        final CallMessage callMessage = new CallMessage("blockchain.scripthash.subscribe", (List)null);
 
         // TODO use TransactionEventListener directly because the current solution leaks memory
         StratumClient.SubscribeResultHandler addressHandler = new StratumClient.SubscribeResultHandler() {
             @Override
             public void handle(CallMessage message) {
                 try {
-                    Address address = new Address(type, message.getParams().getString(0));
+                    String scriptHash = message.getParams().getString(0);
+
+                    //determine address
+                    Address addressFromScriptHash = null;
+                    for(Address address : addresses) {
+                        if(scriptHash.equals(Utils.HEX.encode(Sha256Hash.of(ScriptBuilder.createOutputScript(address).getProgram()).getReversedBytes())))
+                            addressFromScriptHash = address;
+                    }
+
+                    Address address = addressFromScriptHash;//new Address(type, message.getParams().getString(0));
                     AddressStatus status;
                     if (message.getParams().isNull(1)) {
                         status = new AddressStatus(address, null);
@@ -356,8 +368,8 @@ public class ServerClient implements BlockchainConnection {
         };
 
         for (final Address address : addresses) {
-            log.info("Going to subscribe to {}", address);
-            callMessage.setParam(address.toString());
+            log.info("Going to subscribe to {} - scriptHash: {}", address, Utils.HEX.encode(Sha256Hash.of(ScriptBuilder.createOutputScript(address).getProgram()).getReversedBytes()));
+            callMessage.setParam(Utils.HEX.encode(Sha256Hash.of(ScriptBuilder.createOutputScript(address).getProgram()).getReversedBytes()));
 
             ListenableFuture<ResultMessage> reply = stratumClient.subscribe(callMessage, addressHandler);
 
@@ -395,8 +407,9 @@ public class ServerClient implements BlockchainConnection {
     public void getHistoryTx(final AddressStatus status, final TransactionEventListener listener) {
         checkNotNull(stratumClient);
 
-        final CallMessage message = new CallMessage("blockchain.address.get_history",
-                Arrays.asList(status.getAddress().toString()));
+        final CallMessage message = new CallMessage("blockchain.scripthash.get_history",
+                Arrays.asList(Utils.HEX.encode(Sha256Hash.of(ScriptBuilder.createOutputScript(status.getAddress()).getProgram()).getReversedBytes())));
+
         final ListenableFuture<ResultMessage> result = stratumClient.call(message);
 
         Futures.addCallback(result, new FutureCallback<ResultMessage>() {
